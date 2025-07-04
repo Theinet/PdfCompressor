@@ -24,7 +24,7 @@ Download the latest stable release from the [Releases page](https://github.com/T
 > 💾 [Download PdfCompressorInstaller.exe](https://the-inet.vercel.app/PdfCompressor/download)
 
 **SHA-256:**  
-`55EB8247D64F4EAB6ACE0892345C6ED76631C27883A2B30411649A6DA2929DF7`
+`0CF5AD22248EAEE6AC78A2589D512873818310F9F3363DB366D3EC1C4B4D70B0`
 
 To verify the installer:
 
