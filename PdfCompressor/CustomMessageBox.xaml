@@ -1,0 +1,70 @@
+﻿<Window x:Class="PdfCompressor.CustomMessageBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Message"
+        Height="180" Width="400"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <!-- Outer border with rounded corners and light styling -->
+    <Border CornerRadius="12"
+            Background="White"
+            Padding="20"
+            BorderBrush="#DDD"
+            BorderThickness="1">
+
+        <StackPanel>
+
+            <!-- Title text (bold) -->
+            <TextBlock x:Name="TitleText"
+                       FontWeight="SemiBold"
+                       FontSize="18"
+                       Foreground="#333"
+                       Margin="0 0 0 10"
+                       FontFamily="Segoe UI" />
+
+            <!-- Main message text -->
+            <TextBlock x:Name="MessageText"
+                       TextWrapping="Wrap"
+                       FontSize="14"
+                       Foreground="#555"
+                       FontFamily="Segoe UI"
+                       Margin="0 0 0 10" />
+
+            <!-- Button row -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
+                <!-- OK button with rounded style -->
+                <Button x:Name="OKButton"
+                        Width="90"
+                        Height="36"
+                        Click="Ok_Click"
+                        Background="#4CAF50"
+                        Foreground="White"
+                        FontSize="14"
+                        FontFamily="Segoe UI"
+                        BorderBrush="Transparent"
+                        Cursor="Hand">
+
+                    <!-- Custom template for rounded button -->
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}"
+                                    CornerRadius="18"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="0">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+
+                </Button>
+
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>
