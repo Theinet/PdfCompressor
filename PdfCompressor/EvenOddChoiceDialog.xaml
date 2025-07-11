@@ -1,0 +1,56 @@
+﻿<Window x:Class="PdfCompressor.EvenOddChoiceDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title=""
+        Width="300"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        WindowStyle="SingleBorderWindow"
+        ShowInTaskbar="False"
+        Background="White">
+
+    <Border CornerRadius="8" Background="White" Padding="20" BorderBrush="#DDD" BorderThickness="1">
+        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
+
+            <TextBlock x:Name="PromptText"
+                       FontSize="14"
+                       FontWeight="Bold"
+                       Foreground="#333"
+                       TextAlignment="Center"
+                       TextWrapping="Wrap"
+                       Margin="0,0,0,20"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
+                <Button x:Name="EvenButton"
+                        Width="100" Height="34"
+                        Margin="0,0,10,0"
+                        Background="#4CAF50"
+                        Foreground="White"
+                        FontWeight="SemiBold"
+                        Content=""
+                        Click="Even_Click"/>
+
+                <Button x:Name="OddButton"
+                        Width="100" Height="34"
+                        Background="#2196F3"
+                        Foreground="White"
+                        FontWeight="SemiBold"
+                        Content=""
+                        Click="Odd_Click"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="CancelButton"
+                        Width="90" Height="30"
+                        Background="#F5F5F5"
+                        BorderBrush="#CCC"
+                        Foreground="#444"
+                        FontWeight="Normal"
+                        Content=""
+                        Click="Cancel_Click"/>
+            </StackPanel>
+
+        </StackPanel>
+    </Border>
+</Window>
