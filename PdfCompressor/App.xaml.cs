@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -48,10 +48,6 @@ namespace PdfCompressor
                 if (!Directory.Exists(DataDir))
                     Directory.CreateDirectory(DataDir);
 
-                CopyFolderIfMissing("Ghostscript");
-                CopyFolderIfMissing("uk");
-                CopyFolderIfMissing("bin");
-
                 string configSource = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
                 string configTarget = Path.Combine(DataDir, "config.json");
 
@@ -60,33 +56,8 @@ namespace PdfCompressor
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error copying files: {ex.Message}", "Setup Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error copying config.json: {ex.Message}", "Setup Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Shutdown();
-            }
-        }
-
-        private void CopyFolderIfMissing(string folderName)
-        {
-            string source = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, folderName);
-            string target = Path.Combine(DataDir, folderName);
-
-            if (!Directory.Exists(target) && Directory.Exists(source))
-            {
-                CopyAll(new DirectoryInfo(source), new DirectoryInfo(target));
-            }
-        }
-
-        private void CopyAll(DirectoryInfo source, DirectoryInfo target)
-        {
-            Directory.CreateDirectory(target.FullName);
-            foreach (FileInfo fi in source.GetFiles())
-            {
-                fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
-            }
-            foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
-            {
-                DirectoryInfo nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
-                CopyAll(diSourceSubDir, nextTargetSubDir);
             }
         }
 
