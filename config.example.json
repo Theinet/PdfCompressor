@@ -1,0 +1,16 @@
+  // -------------- THE INET --------------
+  // Syncfusion license key configuration
+  // -------------------------------------
+  // IMPORTANT:
+  // Place your actual license key below.
+  //
+  // This file should be renamed to `config.json`
+  // and placed in the same folder as the compiled EXE.
+  //
+  // Example path: PdfCompressor\bin\Debug\config.json
+  //
+  // Do NOT share your real license key publicly.
+
+{
+  "LicenseKey": "YOUR-LICENSE-KEY-HERE"
+}

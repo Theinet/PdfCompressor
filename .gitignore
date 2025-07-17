@@ -1,0 +1,29 @@
+# Ignore build output
+bin/
+obj/
+
+# Ignore user settings
+.vs/
+*.user
+*.suo
+
+# Ignore NuGet packages
+packages/
+*.nupkg
+*.snupkg
+
+# Ignore Rider/VS Code/JetBrains
+.idea/
+.vscode/
+*.iml
+
+# Ignore crash logs
+PdfCompressor_crash.log
+
+# License protection
+PdfCompressor.License/bin/
+PdfCompressor.License/obj/
+*.pdb
+
+# Optional cleanup
+*.csproj.user

@@ -1,0 +1,148 @@
+﻿<Window x:Class="PdfCompressor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:PdfCompressor"
+        Title="THE INET PDF Compressor"
+        Height="550" Width="750"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        AllowDrop="True"
+        Drop="Window_Drop"
+        DragOver="Window_DragOver"
+        Background="#FAFAFA"
+        KeyDown="Window_KeyDown">
+
+    <Window.Resources>
+        <!-- Converter to toggle hint visibility -->
+        <local:EmptyListToVisibilityConverter x:Key="EmptyListToVisibilityConverter"/>
+    </Window.Resources>
+
+    <DockPanel>
+
+        <!-- Top menu -->
+        <Menu DockPanel.Dock="Top" Background="#EEEEEE" FontWeight="Bold">
+            <MenuItem x:Name="MenuFile" Header="_Файл">
+                <MenuItem x:Name="MenuAddPdf" Header="_Додати PDF" Click="AddPdf_Click" InputGestureText="Ctrl+O"/>
+                <Separator/>
+                <MenuItem x:Name="MenuPrint" Header="_Друк" Click="Print_Click" InputGestureText="Ctrl+P"/>
+                <MenuItem x:Name="MenuExit" Header="_Вихід" Click="Exit_Click"/>
+            </MenuItem>
+
+            <MenuItem x:Name="MenuActions" Header="_Дії">
+                <MenuItem x:Name="MenuCompressPdf" Header="_Стиснути" Click="Compress_Click" InputGestureText="Ctrl+S"/>
+                <MenuItem x:Name="MenuSafeMerge" Header="Безпечне об'єднання" Click="Merge_Click"/>
+                <MenuItem x:Name="MenuSplitPdf" Header="Розділити PDF" Click="Split_Click"/>
+                <MenuItem x:Name="MenuRemovePages" Header="Видалити сторінки" Click="RemovePages_Click"/>
+                <MenuItem x:Name="MenuExtractText" Header="Витягти текст" Click="ExtractText_Click"/>
+                <MenuItem x:Name="MenuExtractImages" Header="Витягти зображення" Click="ExtractImages_Click"/>
+                <MenuItem x:Name="MenuConvertToImages" Header="Конвертувати в зображення" Click="ConvertToImages_Click"/>
+                <MenuItem x:Name="MenuRemoveAll" Header="_Очистити список" Click="RemoveAllFiles_Click" InputGestureText="Ctrl+X"/>
+                <MenuItem x:Name="MenuClearLog" Header="Очистити _лог" Click="ClearLog_Click" InputGestureText="Ctrl+L"/>
+            </MenuItem>
+
+            <MenuItem x:Name="MenuLanguage" Header="_Мова">
+                <MenuItem Header="English" Click="SetEnglish_Click"/>
+                <MenuItem Header="Українська" Click="SetUkrainian_Click"/>
+            </MenuItem>
+
+            <MenuItem x:Name="MenuHelp" Header="_Допомога">
+                <MenuItem x:Name="MenuAbout" Header="Про програму" Click="About_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- PDF ListBox with drag hint -->
+            <Grid Grid.Row="0">
+                <ListBox Name="PdfListBox"
+                         SelectionMode="Single"
+                         KeyDown="PdfListBox_KeyDown"
+                         Margin="0,0,0,10">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel Margin="0,2">
+                                <TextBlock Text="{Binding FileName}" VerticalAlignment="Center" Margin="5,0"/>
+                                <Button DockPanel.Dock="Right" Width="20" Height="20"
+                                        Click="RemoveFileButton_Click"
+                                        ToolTip="Видалити"
+                                        Content="✖" FontSize="12" FontWeight="Bold"
+                                        Background="Transparent" Foreground="Red"
+                                        BorderThickness="0" Cursor="Hand" HorizontalAlignment="Right">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Opacity" Value="0.4"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Opacity" Value="1"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <!-- Drag-and-drop hint -->
+                <TextBlock x:Name="PdfListHint"
+                           FontSize="16"
+                           FontStyle="Italic"
+                           Foreground="Gray"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           IsHitTestVisible="False"
+                           Visibility="{Binding ElementName=PdfListBox, Path=Items.Count, Converter={StaticResource EmptyListToVisibilityConverter}}"/>
+            </Grid>
+
+            <!-- Compression controls -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10" HorizontalAlignment="Left">
+                <TextBlock x:Name="TextCompressionQuality" Text="Автоматичне стиснення" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <Button x:Name="ButtonCompress" Content="Стиснути" Width="100" Height="28"
+                        Click="Compress_Click"
+                        Background="#4CAF50"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        Cursor="Hand"/>
+            </StackPanel>
+
+            <!-- Progress bar -->
+            <ProgressBar Grid.Row="2" Name="ProgressBar" Height="20" Minimum="0" Maximum="100" Margin="0,0,0,10"/>
+
+            <!-- Log output -->
+            <TextBox Grid.Row="3" Name="LogTextBox" Height="120" IsReadOnly="True"
+                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                     Background="#FFF" BorderBrush="#CCC"
+                     FontFamily="Consolas" FontSize="12"/>
+
+            <!-- Loading overlay -->
+            <Grid x:Name="LoadingOverlay"
+                  Background="#80000000"
+                  Visibility="Collapsed"
+                  Panel.ZIndex="999"
+                  IsHitTestVisible="True">
+                <Border Background="White" Padding="30" CornerRadius="10"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Width="260">
+                    <StackPanel>
+                        <TextBlock x:Name="LoadingText"
+                                   Text="Завантаження..."
+                                   FontSize="16"
+                                   FontWeight="SemiBold"
+                                   Foreground="#333"
+                                   HorizontalAlignment="Center"
+                                   TextAlignment="Center"
+                                   Margin="0,0,0,20"/>
+                        <ProgressBar IsIndeterminate="True" Height="20"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>
