@@ -249,6 +249,9 @@
   <data name="NoAppAssociated" xml:space="preserve">
     <value>No application is associated with the specified file</value>
   </data>
+  <data name="NoRealPrinters" xml:space="preserve">
+    <value>No physical printer found</value>
+  </data>
   <data name="OK" xml:space="preserve">
     <value>Ok</value>
   </data>

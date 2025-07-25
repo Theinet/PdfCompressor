@@ -254,7 +254,9 @@
     <Compile Include="ImageExportDialog.xaml.cs">
       <DependentUpon>ImageExportDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\GhostscriptCompressor.cs" />
+    <Compile Include="Services\IFileService.cs" />
     <Compile Include="Services\LocalizationManager.cs" />
     <Compile Include="Services\PdfManager.cs" />
     <Page Include="CustomMessageBox.xaml">

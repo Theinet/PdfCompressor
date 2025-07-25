@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Windows;
 
 namespace PdfCompressor.Services
 {
@@ -15,6 +14,12 @@ namespace PdfCompressor.Services
     /// </summary>
     public class PdfManager
     {
+        private readonly IFileService fileService;
+
+        public PdfManager(IFileService fileService)
+        {
+            this.fileService = fileService;
+        }
         /// <summary>
         /// Extracts all text from the given PDF file and saves it to a .txt file.
         /// </summary>
@@ -31,7 +36,7 @@ namespace PdfCompressor.Services
 
             File.WriteAllText(outputPath, result);
             log($"{LocalizationManager.GetString("TextExtracted")}: {outputPath}");
-            CustomMessageBox.Show(LocalizationManager.GetString("TextExtracted"));
+            fileService.ShowMessage(LocalizationManager.GetString("TextExtracted"));
         }
         /// <summary>
         /// Extracts all images from the given PDF file and saves them as PNG files.
@@ -63,7 +68,7 @@ namespace PdfCompressor.Services
                         {
                             CrashLogger.Log(ex);
                             log($"{LocalizationManager.GetString("Error")}: {ex.Message}");
-                            MessageBox.Show($"Image save error:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            fileService.ShowMessage($"{LocalizationManager.GetString("Error")}: {ex.Message}", LocalizationManager.GetString("Error"));
                         }
                         finally
                         {
@@ -76,7 +81,7 @@ namespace PdfCompressor.Services
                 }
 
                 string successMessage = $"{LocalizationManager.GetString("ImagesExtracted")}: {count}";
-                CustomMessageBox.Show(successMessage, LocalizationManager.GetString("Ready"));
+                fileService.ShowMessage(successMessage, LocalizationManager.GetString("Ready"));
                 log(successMessage);
                 return count;
             }
@@ -84,7 +89,7 @@ namespace PdfCompressor.Services
             {
                 CrashLogger.Log(ex);
                 string errorMessage = $"{LocalizationManager.GetString("Error")}: {ex.Message}";
-                CustomMessageBox.Show(errorMessage, LocalizationManager.GetString("Error"));
+                fileService.ShowMessage(errorMessage, LocalizationManager.GetString("Error"));
                 log(errorMessage);
                 return count;
             }
@@ -111,7 +116,7 @@ namespace PdfCompressor.Services
             }
 
             log($"{LocalizationManager.GetString("SplitDone")}: {outputFolder}");
-            CustomMessageBox.Show(LocalizationManager.GetString("SplitDone"));
+            fileService.ShowMessage(LocalizationManager.GetString("SplitDone"));
         }
         /// <summary>
         /// Removes specific pages from a PDF and saves the cleaned version.
@@ -134,7 +139,7 @@ namespace PdfCompressor.Services
                 string msg = LocalizationManager.GetString("PdfEmptyError") ??
                              $"PDF \"{Path.GetFileName(selected.FilePath)}\" has no pages after removal. Skipped.";
                 log(msg);
-                CustomMessageBox.Show(msg, LocalizationManager.GetString("Info") ?? "Info");
+                fileService.ShowMessage(msg, LocalizationManager.GetString("Info"));
                 return;
             }
 
@@ -142,7 +147,7 @@ namespace PdfCompressor.Services
             newDoc.Close();
 
             log($"{LocalizationManager.GetString("PagesDeleted")}: {outputPath}");
-            CustomMessageBox.Show(LocalizationManager.GetString("PagesDeleted"));
+            fileService.ShowMessage(LocalizationManager.GetString("PagesDeleted"));
         }
         /// <summary>
         /// Merges multiple PDF files into a single PDF and saves to output path.
@@ -180,11 +185,11 @@ namespace PdfCompressor.Services
                 mergedDoc.Close();
 
                 log($"{LocalizationManager.GetString("Ready")}: {outputPath}");
-                CustomMessageBox.Show(LocalizationManager.GetString("MergedCreated"), LocalizationManager.GetString("Ready"));
+                fileService.ShowMessage(LocalizationManager.GetString("MergedCreated"), LocalizationManager.GetString("Ready"));
             }
             catch (Exception ex)
             {
-                CustomMessageBox.Show($"{LocalizationManager.GetString("Error")}: {ex.Message}", LocalizationManager.GetString("Error"));
+                fileService.ShowMessage($"{LocalizationManager.GetString("Error")}: {ex.Message}", LocalizationManager.GetString("Error"));
                 log($"{LocalizationManager.GetString("Error")}: {ex.Message}");
             }
         }

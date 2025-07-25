@@ -17,13 +17,13 @@ namespace PdfCompressor
             catch (Exception ex)
             {
                 CrashLogger.Log(ex);
-                MessageBox.Show("Initialization error:\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                CustomMessageBox.Show("Initialization error:\n" + ex.Message, "Error");
             }
 
             this.DispatcherUnhandledException += (sender, args) =>
             {
                 CrashLogger.Log(args.Exception);
-                MessageBox.Show("An unexpected error occurred:\n" + args.Exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                CustomMessageBox.Show("An unexpected error occurred:\n" + args.Exception.Message, "Error");
                 args.Handled = true;
             };
 
@@ -32,7 +32,7 @@ namespace PdfCompressor
                 if (args.ExceptionObject is Exception ex)
                 {
                     CrashLogger.Log(ex);
-                    MessageBox.Show("A fatal error occurred:\n" + ex.Message, "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    CustomMessageBox.Show("A fatal error occurred:\n" + ex.Message, "Fatal Error");
                 }
             };
         }

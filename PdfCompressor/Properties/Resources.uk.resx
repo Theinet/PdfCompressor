@@ -252,6 +252,9 @@
   <data name="NoAppAssociated" xml:space="preserve">
     <value>Не встановлено застосунок для відкриття файлу</value>
   </data>
+  <data name="NoRealPrinters" xml:space="preserve">
+    <value>Не знайдено жодного принтера</value>
+  </data>
   <data name="OK" xml:space="preserve">
     <value>Добре</value>
   </data>

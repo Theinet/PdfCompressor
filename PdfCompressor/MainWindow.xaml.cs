@@ -35,11 +35,13 @@ namespace PdfCompressor
         private List<PdfFileItem> pdfFiles = new List<PdfFileItem>();
 
         // PDF processing service instance
-        private readonly PdfManager pdfManager = new PdfManager();
+        private readonly PdfManager pdfManager;
+        private readonly IFileService fileService = new FileService();
 
         public MainWindow()
         {
             InitializeComponent();
+            pdfManager = new PdfManager(fileService);
             ApplyLocalization(); // Load localized UI strings
             Loaded += MainWindow_Loaded;
         }
@@ -320,6 +322,7 @@ namespace PdfCompressor
                 });
             });
         }
+
         // Print selected PDF file
         private void Print_Click(object sender, RoutedEventArgs e)
         {
@@ -329,50 +332,17 @@ namespace PdfCompressor
                 return;
             }
 
-            PdfFileItem selected;
+            var selected = pdfFiles.Count == 1
+                ? pdfFiles[0]
+                : PdfListBox.SelectedItem as PdfFileItem;
 
-            if (pdfFiles.Count == 1)
+            if (selected == null)
             {
-                selected = pdfFiles[0];
-            }
-            else
-            {
-                selected = PdfListBox.SelectedItem as PdfFileItem;
-                if (selected == null)
-                {
-                    CustomMessageBox.Show(LocalizationManager.GetString("SelectOneFile"), LocalizationManager.GetString("Error"));
-                    return;
-                }
+                CustomMessageBox.Show(LocalizationManager.GetString("SelectOneFile"), LocalizationManager.GetString("Error"));
+                return;
             }
 
-            try
-            {
-                var printProcess = new Process
-                {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        FileName = selected.FilePath,
-                        Verb = "print",
-                        CreateNoWindow = true,
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        UseShellExecute = true
-                    }
-                };
-                printProcess.Start();
-                Log($"{LocalizationManager.GetString("PrintSent")}: {selected.FileName}");
-            }
-            catch (System.ComponentModel.Win32Exception)
-            {
-                string msg = LocalizationManager.GetString("NoAppAssociated");
-                CustomMessageBox.Show(msg, LocalizationManager.GetString("Error"));
-                Log($"[Print Error] {msg}");
-            }
-            catch (Exception ex)
-            {
-                string msg = $"{LocalizationManager.GetString("PrintError")}: {ex.Message}";
-                CustomMessageBox.Show(msg, LocalizationManager.GetString("Error"));
-                Log(msg);
-            }
+            fileService.PrintFile(selected.FilePath, Log);
         }
         // Extract text from selected PDF
         private async void ExtractText_Click(object sender, RoutedEventArgs e)
