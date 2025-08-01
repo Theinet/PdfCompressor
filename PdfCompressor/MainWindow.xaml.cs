@@ -145,8 +145,8 @@ namespace PdfCompressor
         // Set UI language and reload window
         private void SetCulture(string lang)
         {
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
-            Thread.CurrentThread.CurrentCulture = new CultureInfo(lang);
+            LocalizationManager.SetCulture(lang);
+            LanguageHelper.SaveLanguage(lang);
 
             var newWindow = new MainWindow { WindowStartupLocation = WindowStartupLocation.CenterScreen };
             newWindow.Show();

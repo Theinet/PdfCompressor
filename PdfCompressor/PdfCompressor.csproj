@@ -249,6 +249,7 @@
     </Compile>
     <Compile Include="Helpers\CrashLogger.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Helpers\LanguageHelper.cs" />
     <Compile Include="Helpers\LicenseHelper.cs" />
     <Compile Include="Helpers\SecurityHelper.cs" />
     <Compile Include="ImageExportDialog.xaml.cs">

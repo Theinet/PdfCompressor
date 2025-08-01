@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Resources;
+using System.Threading;
 using PdfCompressor.Properties;
 
 namespace PdfCompressor
@@ -18,6 +19,8 @@ namespace PdfCompressor
         public static void SetCulture(string cultureName)
         {
             CultureInfo culture = new CultureInfo(cultureName);
+            Thread.CurrentThread.CurrentUICulture = culture;
+            Thread.CurrentThread.CurrentCulture = culture;
             CultureInfo.DefaultThreadCurrentUICulture = culture;
             CultureInfo.DefaultThreadCurrentCulture = culture;
         }

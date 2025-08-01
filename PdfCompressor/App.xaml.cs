@@ -12,6 +12,9 @@ namespace PdfCompressor
 
             try
             {
+                string lang = LanguageHelper.LoadLanguage();
+                LocalizationManager.SetCulture(lang);
+
                 FileHelper.SetupAppDataDirectory();
             }
             catch (Exception ex)
