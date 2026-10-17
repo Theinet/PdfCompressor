@@ -646,7 +646,7 @@ namespace PdfCompressor
             {
                 Process.Start(new ProcessStartInfo
                 {
-                    FileName = "https://theinet.vercel.app/pdfcompressor",
+                    FileName = "https://www.theinet.ch/pdfcompressor",
                     UseShellExecute = true
                 });
             }

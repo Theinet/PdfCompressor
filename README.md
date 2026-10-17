@@ -4,7 +4,7 @@
 
 **PdfCompressor** is a fast, lightweight, and user-friendly desktop app for compressing and managing PDF files. Designed with performance, simplicity, and privacy in mind, it gives you powerful tools without the complexity.
 
-![screenshot](https://theinet.vercel.app/images/PdfCompress.jpg)
+![screenshot](https://www.theinet.ch/images/PdfCompress.jpg)
 
 ---
 
@@ -33,10 +33,10 @@ If you are using Linux or macOS, consider using command-line tools like Ghostscr
 
 Download the latest stable release from the [Releases page](https://github.com/Theinet/PdfCompressor/releases/latest):
 
-> 💾 [Download PdfCompressorInstaller.exe](https://theinet.vercel.app/downloads/PdfCompressorInstaller.exe)
+> 💾 [Download PdfCompressorInstaller.exe](https://www.theinet.ch/downloads/PdfCompressorInstaller.exe)
 
 **SHA-256:**  
-`1DC05AD65A124A9926BA622853FBD1DED682C86A6915D1CDDAA005B9C87D2440`
+`16C5A060C08453DBBF6762D1BC3FDE00C2A381DDA0902D514064FE0487A77AF0`
 
 To verify the installer:
 

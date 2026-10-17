@@ -12,6 +12,7 @@ namespace PdfCompressor
 
             try
             {
+                LicenseHelper.ApplySyncfusionLicense();
                 string lang = LanguageHelper.LoadLanguage();
                 LocalizationManager.SetCulture(lang);
 
